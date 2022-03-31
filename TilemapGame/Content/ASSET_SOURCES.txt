@@ -1,0 +1,19 @@
+﻿Content/explosionblue01.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionblue02.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionblue03.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionblue04.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionblue05.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+
+Content/explosionred01.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionred02.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionred03.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionred04.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/explosionred05.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+
+Content/lollipop_blue.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+Content/lollipop_red.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
+
+Content/Player_Black.png - created by Mantis as part of their Players pack on OpenGameArt.org (https://opengameart.org/content/animated-bird-characters), licensed under public domain
+Content/Player_Red5.png - created by Mantis as part of their Players pack on OpenGameArt.org (https://opengameart.org/content/animated-bird-characters), licensed under public domain
+
+Content/Tilemap.png - created by Cassio Freire as part of their Snowplace - PixelArt Asset Pack Platformer on OpenGameArt.org (https://opengameart.org/content/snowplace-pixelart-asset-pack-platformer), licensed under public domain
