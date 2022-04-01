@@ -1,5 +1,7 @@
 ﻿Code References
 Tilemap - based on Tilemap Exercise created by Nathan Bean
+Player - based on Sprite Example created by Nathan Bean
+Collisions/* - based on Collision Example created by Nathan Bean
 
 Assets:
 Content/explosionblue01.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
