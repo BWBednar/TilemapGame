@@ -54,6 +54,7 @@ namespace TilemapGame
         /// <param name="content">The content manager being used</param>
         public void LoadContent(ContentManager content)
         {
+            var test = Path.Join(content.RootDirectory, _filename);
             string data = File.ReadAllText(Path.Join(content.RootDirectory, _filename));
             var lines = data.Split('\n');
 
