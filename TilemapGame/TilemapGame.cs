@@ -8,18 +8,22 @@ namespace TilemapGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Tilemap _tilemap;
 
         public TilemapGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 480;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _tilemap = new Tilemap("TilemapDetails.txt");
             base.Initialize();
         }
 
@@ -28,6 +32,7 @@ namespace TilemapGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            _tilemap.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -45,7 +50,9 @@ namespace TilemapGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            _tilemap.Draw(gameTime, _spriteBatch);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
