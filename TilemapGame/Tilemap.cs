@@ -104,7 +104,7 @@ namespace TilemapGame
             {
                 for (int x = 0; x < _mapWidth; x++)
                 {
-                    int index = _map[y * _mapWidth + x] - 1;
+                    int index = _map[y * _mapWidth + x];
                     if (index == -1) continue;
                     spriteBatch.Draw(
                         _tilesetTexture,
