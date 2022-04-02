@@ -60,6 +60,14 @@ namespace TilemapGame
                     _candies[i].Collected = true;
                 }
             }
+            if (_tilemap.CollidesWith(_player.Bounds))
+            {
+                _player.EncounterWall = true;
+            }
+            else
+            {
+                _player.EncounterWall = false;
+            }
 
             base.Update(gameTime);
         }

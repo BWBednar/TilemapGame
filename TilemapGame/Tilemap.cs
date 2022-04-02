@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using TilemapGame.Collisions;
 
 namespace TilemapGame
 {
@@ -28,6 +29,11 @@ namespace TilemapGame
         /// The tile info in the tileset
         /// </summary>
         Rectangle[] _tiles;
+
+        /// <summary>
+        /// The bounds for the tiles with collision
+        /// </summary>
+        BoundingRectangle[] _tilesBounds;
 
         /// <summary>
         /// The tile map data
@@ -97,6 +103,16 @@ namespace TilemapGame
             {
                 _map[i] = int.Parse(fourthLine[i]);
             }
+
+            _tilesBounds = new BoundingRectangle[_mapWidth * _mapHeight];
+            for (int y = 0; y < _mapHeight; y++)
+            {
+                for(int x = 0; x < _mapWidth; x++)
+                {
+                    int index = y * _mapWidth + x;
+                    _tilesBounds[index] = new BoundingRectangle(x * 16, y * 16, 16, 16);
+                }
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -120,5 +136,18 @@ namespace TilemapGame
             }
         }
 
+        public bool CollidesWith(BoundingRectangle player)
+        {
+            for (int y = 0; y < _mapHeight; y++)
+            {
+                for (int x = 0; x < _mapWidth; x++)
+                {
+                    int index = y * _mapWidth + x;
+                    if (_map[index] == -1) continue;
+                    if (this._tilesBounds[index].CollidesWith(player)) return true;
+                }
+            }
+            return false;
+        }
     }
 }

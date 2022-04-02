@@ -21,12 +21,15 @@ namespace TilemapGame
         private KeyboardState keyboardState;
         private Texture2D texture;
         private bool flipped;
-        private Vector2 position = new Vector2(150, 300);
+        private bool jump;
+        private Vector2 position = new Vector2(200, 150);
         private BoundingRectangle bounds;
         private Game game;
         private Vector2 direction;
         private double timer;
         private int frameCount;
+        private bool encounterWall;
+        private Vector2 lastEncounter = new Vector2(-100, -100);
 
         /// <summary>
         /// The position of the player sprite
@@ -35,6 +38,12 @@ namespace TilemapGame
         {
             get { return position; }
             set { position = value; }
+        }
+
+        public bool EncounterWall
+        {
+            get { return encounterWall; }
+            set { encounterWall = value; }
         }
 
         /// <summary>
@@ -67,7 +76,7 @@ namespace TilemapGame
         {
             this.game = game;
             this.direction = new Vector2(0, 0);
-            this.bounds = new BoundingRectangle(position.X - 8, position.Y - 8, 16, 16);
+            this.bounds = new BoundingRectangle(position.X - 8, position.Y - 8, 15, 15);
         }
 
         /// <summary>
@@ -89,30 +98,48 @@ namespace TilemapGame
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             double limit = 0.2;
             // Apply keyboard movement
-            if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S)) position += new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+            if (!encounterWall)
             {
-                position += new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                flipped = true;
-
-                if (timer > limit)
+                if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
                 {
-                    timer -= limit;
-                    frameCount++;
-                    if (frameCount > 3) frameCount = 0;
+                    jump = true;
+                    position += new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+                {
+                    jump = false;
+                    position += new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+                {
+                    position += new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    flipped = true;
+
+                    if (timer > limit)
+                    {
+                        timer -= limit;
+                        frameCount++;
+                        if (frameCount > 3) frameCount = 0;
+                    }
+                }
+                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                {
+                    position += new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    flipped = false;
+                    if (timer > limit)
+                    {
+                        timer -= limit;
+                        frameCount++;
+                        if (frameCount > 3) frameCount = 0;
+                    }
                 }
             }
-            if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            else
             {
-                position += new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                flipped = false;
-                if (timer > limit)
-                {
-                    timer -= limit;
-                    frameCount++;
-                    if (frameCount > 3) frameCount = 0;
-                }
+                if(flipped) position -= new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(!flipped) position -= new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(jump) position -= new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (!jump) position -= new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             // Wrap the player to keep it on-screen
