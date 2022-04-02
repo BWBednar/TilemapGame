@@ -25,7 +25,11 @@ namespace TilemapGame
         /// <summary>
         /// Bounding circle for collision detection
         /// </summary>
-        public BoundingCircle Bounds => bounds;
+        public BoundingCircle Bounds
+        {
+            get { return bounds; }
+            set { bounds = value; }
+        }
 
         /// <summary>
         /// If the asteroid has been destroyed
@@ -62,14 +66,6 @@ namespace TilemapGame
         }
 
         /// <summary>
-        /// Constructor for the candy sprite, establishes bounding circle
-        /// </summary>
-        public Candy()
-        {
-            this.bounds = new BoundingCircle(Center + new Vector2(-20, -20), 40);
-        }
-
-        /// <summary>
         /// Loads the image the candy sprite is contained in
         /// </summary>
         /// <param name="contentManager">The game's content manager</param>
@@ -87,15 +83,6 @@ namespace TilemapGame
         {
             if (Collected) return;
             Center += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //Keeps the asteroid on screen, will eventually want it to travel to the opposite end of the screen
-            /*
-            if (Center.X < radius || Center.X > Constants.GAME_WIDTH - radius) Velocity *= -Vector2.UnitX;
-            if (Center.Y < radius || Center.Y > Constants.GAME_HEIGHT - radius) Velocity *= -Vector2.UnitY;
-            bounds.Center.X = this.Center.X;
-            bounds.Center.Y = this.Center.Y;
-            Colliding = false;
-            */
         }
 
         /// <summary>

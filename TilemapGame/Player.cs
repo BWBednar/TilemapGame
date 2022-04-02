@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TilemapGame.Collisions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,12 +19,56 @@ namespace TilemapGame
     public class Player
     {
         private KeyboardState keyboardState;
-
         private Texture2D texture;
-
         private bool flipped;
+        private Vector2 position = new Vector2(150, 300);
+        private BoundingRectangle bounds;
+        private Game game;
+        private Vector2 direction;
+        private double timer;
+        private int frameCount;
 
-        private Vector2 position = new Vector2(200, 200);
+        /// <summary>
+        /// The position of the player sprite
+        /// </summary>
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        /// <summary>
+        /// The collision bounds of the sprite
+        /// </summary>
+        public BoundingRectangle Bounds => bounds;
+
+        /// <summary>
+        /// Vector for the center of the space ship
+        /// </summary>
+        public Vector2 Center { get; set; }
+
+        public Vector2 Direction
+        {
+            get { return direction; }
+            set { direction = value; }
+        }
+
+        /// <summary>
+        /// Vector for the velocity of the space ship
+        /// </summary>
+        public Vector2 Velocity { get; set; }
+
+        /// <summary>
+        /// Constructor for the player sprite
+        /// </summary>
+        /// <param name="game">The game being player</param>
+        /// <param name="bounds">The collision bounds of the player</param>
+        public Player(Game game)
+        {
+            this.game = game;
+            this.direction = new Vector2(0, 0);
+            this.bounds = new BoundingRectangle(position.X - 8, position.Y - 8, 16, 16);
+        }
 
         /// <summary>
         /// Loads the sprite texture using the provided ContentManager
@@ -41,20 +86,44 @@ namespace TilemapGame
         public void Update(GameTime gameTime)
         {
             keyboardState = Keyboard.GetState();
-
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
+            double limit = 0.2;
             // Apply keyboard movement
-            //if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0, -2);
-            //if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S)) position += new Vector2(0, 2);
+            if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S)) position += new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
             {
-                position += new Vector2(-2, 0);
+                position += new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 flipped = true;
+
+                if (timer > limit)
+                {
+                    timer -= limit;
+                    frameCount++;
+                    if (frameCount > 3) frameCount = 0;
+                }
             }
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
-                position += new Vector2(2, 0);
+                position += new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 flipped = false;
+                if (timer > limit)
+                {
+                    timer -= limit;
+                    frameCount++;
+                    if (frameCount > 3) frameCount = 0;
+                }
             }
+
+            // Wrap the player to keep it on-screen
+            var viewport = game.GraphicsDevice.Viewport;
+            if (position.Y < 0) position.Y = viewport.Height;
+            if (position.Y > viewport.Height) position.Y = 0;
+            if (position.X < 0) position.X = viewport.Width;
+            if (position.X > viewport.Width) position.X = 0;
+
+            bounds.X = position.X - 8;
+            bounds.Y = position.Y - 8;
         }
 
         /// <summary>
@@ -64,8 +133,20 @@ namespace TilemapGame
         /// <param name="spriteBatch">The spritebatch to render with</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            
+            var source = new Rectangle(frameCount * 15, 0, 15, 15);
             SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Draw(texture, position, new Rectangle(0, 0, 15, 16), Color.White, 0, new Vector2(16, 16), 2.0f, spriteEffects, 0);
+            spriteBatch.Draw(texture, position, source, Color.White, 0, new Vector2(16, 16), 2.0f, spriteEffects, 0);
+        }
+
+        /// <summary>
+        /// Detects if there has been a collision, particularly with an candy sprite
+        /// </summary>
+        /// <param name="circle">The bounding circle being detected</param>
+        /// <returns>If the ship has collided with the circle</returns>
+        public bool CollidesWith(BoundingCircle circle)
+        {
+            return this.bounds.CollidesWith(circle);
         }
     }
 }

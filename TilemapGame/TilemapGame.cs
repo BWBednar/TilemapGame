@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using TilemapGame.Collisions;
 
 namespace TilemapGame
 {
@@ -27,7 +28,7 @@ namespace TilemapGame
         {
             // TODO: Add your initialization logic here
             _tilemap = new Tilemap("TilemapDetails.txt");
-            _player = new Player();
+            _player = new Player(this);
             _candies = new List<Candy>();
             CandySetup(); 
 
@@ -52,6 +53,14 @@ namespace TilemapGame
             // TODO: Add your update logic here
             _player.Update(gameTime);
             foreach (Candy c in _candies) c.Update(gameTime);
+            for(int i = 0; i < _candies.Count; i++)
+            {
+                if (_player.CollidesWith(_candies[i].Bounds) && !_candies[i].Collected)
+                {
+                    _candies[i].Collected = true;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -75,60 +84,71 @@ namespace TilemapGame
         {
             int mass = 15;
             Vector2 velocity = new Vector2(0, 0);
+            int size = 40;
+            int radius = 25;
             _candies = new List<Candy>();
             _candies.Add(new Candy()
             {
                 Center = new Vector2(400, 50),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(400 + (size /2), 50 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(125, 100),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(125 + (size / 2), 100 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(675, 100),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(675 + (size / 2), 100 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(400, 160),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 160 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(400, 300),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 300 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(25, 330),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(25 + (size / 2), 330 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(775, 330),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(775 + (size / 2), 330 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(145, 450),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(145 + (size / 2), 450 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
             {
                 Center = new Vector2(655, 450),
                 Velocity = velocity,
-                Mass = mass
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(655 + (size / 2), 450 + (size / 2)), radius)
             });
         }
     }
