@@ -23,3 +23,9 @@ Content/Player_Black.png - created by Mantis as part of their Players pack on Op
 Content/Player_Red5.png - created by Mantis as part of their Players pack on OpenGameArt.org (https://opengameart.org/content/animated-bird-characters), licensed under public domain 
 
 Content/Tilemap.png - created by Cassio Freire as part of their Snowplace - PixelArt Asset Pack Platformer on OpenGameArt.org (https://opengameart.org/content/snowplace-pixelart-asset-pack-platformer), licensed under public domain
+
+Content/Candy_Pickup.wav - created by me (Brandon Bednar), using Bfxr Sound Effects Tool
+
+Content/Sleigh Ride - created by Dee Yan-Key and available on Free Music Archive (https://freemusicarchive.org/music/Dee_Yan-Key/my_christmas_music/17--Dee_Yan-Key-sleigh_ride_III), licensed under CC BY-NC-SA 4.0
+
+Content/Press_Start_2P/PressStart2P-Regular.ttf - Press_Start_2P font created by CodeMan38, released on Google Fonts (https://fonts.google.com/specimen/Press%20Start%202P) under the Open Font License

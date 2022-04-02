@@ -22,7 +22,7 @@ namespace TilemapGame
         private Texture2D texture;
         private bool flipped;
         private bool jump;
-        private Vector2 position = new Vector2(200, 150);
+        private Vector2 position = new Vector2(150, 200);
         private BoundingRectangle bounds;
         private Game game;
         private Vector2 direction;
@@ -40,6 +40,9 @@ namespace TilemapGame
             set { position = value; }
         }
 
+        /// <summary>
+        /// Used to tell if the player is running into a wall 
+        /// </summary>
         public bool EncounterWall
         {
             get { return encounterWall; }
@@ -52,10 +55,13 @@ namespace TilemapGame
         public BoundingRectangle Bounds => bounds;
 
         /// <summary>
-        /// Vector for the center of the space ship
+        /// Vector for the center of the player
         /// </summary>
         public Vector2 Center { get; set; }
 
+        /// <summary>
+        /// The direction the player is facing
+        /// </summary>
         public Vector2 Direction
         {
             get { return direction; }
@@ -63,7 +69,7 @@ namespace TilemapGame
         }
 
         /// <summary>
-        /// Vector for the velocity of the space ship
+        /// Vector for the velocity of the player
         /// </summary>
         public Vector2 Velocity { get; set; }
 
@@ -76,7 +82,7 @@ namespace TilemapGame
         {
             this.game = game;
             this.direction = new Vector2(0, 0);
-            this.bounds = new BoundingRectangle(position.X - 8, position.Y - 8, 15, 15);
+            this.bounds = new BoundingRectangle(position.X - 7, position.Y - 7, 14, 14);
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace TilemapGame
             keyboardState = Keyboard.GetState();
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             double limit = 0.2;
-            // Apply keyboard movement
+            // Apply keyboard movement if the player would not walk into a wall
             if (!encounterWall)
             {
                 if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
@@ -134,6 +140,7 @@ namespace TilemapGame
                     }
                 }
             }
+            //This is a temporary solution to allow the player to move away from the tile map platform. Need to implement a better solution
             else
             {
                 if(flipped) position -= new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -141,6 +148,8 @@ namespace TilemapGame
                 if(jump) position -= new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (!jump) position -= new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+
+            
 
             // Wrap the player to keep it on-screen
             var viewport = game.GraphicsDevice.Viewport;

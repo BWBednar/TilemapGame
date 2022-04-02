@@ -110,7 +110,9 @@ namespace TilemapGame
                 for(int x = 0; x < _mapWidth; x++)
                 {
                     int index = y * _mapWidth + x;
-                    _tilesBounds[index] = new BoundingRectangle(x * 16, y * 16, 16, 16);
+                    int startingX = x * 16 - 1;
+                    int startingY = y * 16 - 1;
+                    _tilesBounds[index] = new BoundingRectangle(startingX, startingY, 14, 14);
                 }
             }
         }
@@ -143,8 +145,10 @@ namespace TilemapGame
                 for (int x = 0; x < _mapWidth; x++)
                 {
                     int index = y * _mapWidth + x;
-                    if (_map[index] == -1) continue;
-                    if (this._tilesBounds[index].CollidesWith(player)) return true;
+                    if (_map[index] != -1)
+                    {
+                        if (this._tilesBounds[index].CollidesWith(player)) return true;
+                    } 
                 }
             }
             return false;

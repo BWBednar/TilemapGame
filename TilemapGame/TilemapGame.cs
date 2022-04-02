@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using TilemapGame.Collisions;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace TilemapGame
 {
@@ -13,6 +15,10 @@ namespace TilemapGame
         private Tilemap _tilemap;
         private Player _player;
         private List<Candy> _candies;
+        private int _totalCollected = 0;
+        private SoundEffect _candyCollectedSound;
+        private Song _music;
+        private SpriteFont _textFont;
 
         public TilemapGame()
         {
@@ -31,7 +37,7 @@ namespace TilemapGame
             _player = new Player(this);
             _candies = new List<Candy>();
             CandySetup(); 
-
+            
             base.Initialize();
         }
 
@@ -43,6 +49,11 @@ namespace TilemapGame
             _tilemap.LoadContent(Content);
             _player.LoadContent(Content);
             foreach (Candy c in _candies) c.LoadContent(Content);
+            _candyCollectedSound = Content.Load<SoundEffect>("Candy_Pickup");
+            _music = Content.Load<Song>("Sleigh Ride");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(_music);
+            _textFont = Content.Load<SpriteFont>("PressStart2P");
         }
 
         protected override void Update(GameTime gameTime)
@@ -58,6 +69,8 @@ namespace TilemapGame
                 if (_player.CollidesWith(_candies[i].Bounds) && !_candies[i].Collected)
                 {
                     _candies[i].Collected = true;
+                    _candyCollectedSound.Play();
+                    _totalCollected++;
                 }
             }
             if (_tilemap.CollidesWith(_player.Bounds))
@@ -68,7 +81,11 @@ namespace TilemapGame
             {
                 _player.EncounterWall = false;
             }
-
+            if(_totalCollected % 9 == 0 && _totalCollected > 0)
+            {
+                CandySetup();
+                foreach (Candy c in _candies) c.LoadContent(Content);
+            }
             base.Update(gameTime);
         }
 
@@ -81,6 +98,8 @@ namespace TilemapGame
             _tilemap.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
+            _spriteBatch.DrawString(_textFont, "Use Arrows\n to Move", new Vector2(25, 25), Color.Gold);
+            _spriteBatch.DrawString(_textFont, "Collect\n Candy", new Vector2(600, 25), Color.Gold);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
