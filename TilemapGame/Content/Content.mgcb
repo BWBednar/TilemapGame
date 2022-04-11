@@ -169,6 +169,18 @@
 /processorParam:TextureFormat=Color
 /build:lollipop_red.png
 
+#begin peppermint_diffuse.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peppermint_diffuse.png
+
 #begin Player_Black.png
 /importer:TextureImporter
 /processor:TextureProcessor
