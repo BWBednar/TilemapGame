@@ -1,8 +1,13 @@
-﻿using System;
+﻿/**
+ * Starting code taken from Basic 3D Rending Example and Lighting and Camera Example by Nathan Bean
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TilemapGame.Collisions;
 
 namespace TilemapGame
 {
@@ -13,8 +18,19 @@ namespace TilemapGame
         IndexBuffer indexBuffer;
         BasicEffect effect;
         Texture2D texture;
+        BoundingRectangle bounds;
 
-        public CubeCandy(Game game, Matrix world)
+        public BoundingRectangle Bounds
+        {
+            get { return bounds; }
+            set { bounds = value; }
+        }
+
+        public bool Colliding { get; set; }
+
+        public bool Collected = false;
+
+        public CubeCandy(Game game, Matrix world, BoundingRectangle bounds)
         {
             this.game = game;
             this.texture = game.Content.Load<Texture2D>("peppermint_diffuse");
@@ -22,6 +38,7 @@ namespace TilemapGame
             InitializeIndices();
             InitializeEffect();
             effect.World = world;
+            this.bounds = bounds;
         }
 
         /// <summary>
@@ -168,6 +185,8 @@ namespace TilemapGame
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            if (Collected) return;
+
             float angle = (float)gameTime.TotalGameTime.TotalSeconds;
             // Look at the cube from farther away while spinning around it
             effect.View = Matrix.CreateRotationY(angle) * Matrix.CreateLookAt(

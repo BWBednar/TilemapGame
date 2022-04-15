@@ -205,6 +205,12 @@
 /processorParam:TextureFormat=Color
 /build:Player_Red5.png
 
+#begin PowerUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:PowerUp.wav
+
 #begin PressStart2P.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

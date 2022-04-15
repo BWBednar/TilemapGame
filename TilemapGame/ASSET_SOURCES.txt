@@ -2,6 +2,7 @@
 Tilemap - based on Tilemap Exercise created by Nathan Bean
 Player - based on Sprite Example created by Nathan Bean
 Collisions/* - based on Collision Example created by Nathan Bean
+CubeCandy - based on Basic 3D Rending Example and Lighting and Camera Example by Nathan Bean
 
 Assets:
 Content/explosionblue01.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
@@ -31,3 +32,5 @@ Content/Sleigh Ride - created by Dee Yan-Key and available on Free Music Archive
 Content/Press_Start_2P/PressStart2P-Regular.ttf - Press_Start_2P font created by CodeMan38, released on Google Fonts (https://fonts.google.com/specimen/Press%20Start%202P) under the Open Font License
 
 Content/peppermint_diffuse.png - created by Clint Bellanger as part of their Candy Pack on OpenGameArt.org (https://opengameart.org/content/candy-pack), licensed under public domain, image modified to use only part of the original asset
+
+Content/PowerUp.wav - created by phoenix1291 (AKA SwissArcadeGameEntertainment) as part of their Sound Effect Pack 2 on OpenGameArt.Org (https://opengameart.org/content/sound-effects-pack-2), licensed under public domain

@@ -19,7 +19,10 @@ namespace TilemapGame
         private SoundEffect _candyCollectedSound;
         private Song _music;
         private SpriteFont _textFont;
-        private CubeCandy test;
+        private CubeCandy cubeCandy;
+        private SoundEffect _powerUpSound;
+        private double powerUpTimer;
+        private double powerUpTimeLimit = 5.0;
 
         public TilemapGame()
         {
@@ -55,7 +58,8 @@ namespace TilemapGame
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(_music);
             _textFont = Content.Load<SpriteFont>("PressStart2P");
-            test = new CubeCandy(this, Matrix.Identity);
+            cubeCandy = new CubeCandy(this, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
+            _powerUpSound = Content.Load<SoundEffect>("PowerUp");
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,6 +79,7 @@ namespace TilemapGame
                     _totalCollected++;
                 }
             }
+            
             if (_tilemap.CollidesWith(_player.Bounds))
             {
                 _player.EncounterWall = true;
@@ -87,8 +92,30 @@ namespace TilemapGame
             {
                 CandySetup();
                 foreach (Candy c in _candies) c.LoadContent(Content);
+                if (cubeCandy == null) cubeCandy = new CubeCandy(this, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
             }
-            test.Update(gameTime);
+            if (_player.PowerUpActive)
+            {
+                powerUpTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (powerUpTimer > powerUpTimeLimit)
+                {
+                    _player.PowerUpActive = false;
+                    powerUpTimer -= powerUpTimeLimit;
+                    
+                }
+            }
+            if(cubeCandy != null)
+            {
+                if (_player.CollidesWith(cubeCandy.Bounds))
+                {
+                    cubeCandy.Collected = true;
+                    _powerUpSound.Play();
+                    cubeCandy = null;
+                    _player.PowerUpActive = true;
+                }
+            }
+            if (cubeCandy == null) cubeCandy = null;
+            else cubeCandy.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -103,7 +130,7 @@ namespace TilemapGame
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(_textFont, "Use Arrows\n to Move", new Vector2(25, 25), Color.Gold);
             _spriteBatch.DrawString(_textFont, "Collect\n Candy", new Vector2(600, 25), Color.Gold);
-            test.Draw();
+            if (cubeCandy != null) cubeCandy.Draw();
             _spriteBatch.End();
             base.Draw(gameTime);
         }

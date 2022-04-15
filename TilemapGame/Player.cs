@@ -30,6 +30,8 @@ namespace TilemapGame
         private int frameCount;
         private bool encounterWall;
         private Vector2 lastEncounter = new Vector2(-100, -100);
+        private bool powerUpActive;
+        private float speed;
 
         /// <summary>
         /// The position of the player sprite
@@ -73,6 +75,12 @@ namespace TilemapGame
         /// </summary>
         public Vector2 Velocity { get; set; }
 
+        public bool PowerUpActive 
+        {
+            get { return powerUpActive; }
+            set { powerUpActive = value; }
+        }
+
         /// <summary>
         /// Constructor for the player sprite
         /// </summary>
@@ -100,6 +108,9 @@ namespace TilemapGame
         /// <param name="gameTime">The GameTime</param>
         public void Update(GameTime gameTime)
         {
+            if (powerUpActive) speed = 2.5f;
+            else speed = 1.0f;
+
             keyboardState = Keyboard.GetState();
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             double limit = 0.2;
@@ -109,16 +120,16 @@ namespace TilemapGame
                 if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
                 {
                     jump = true;
-                    position += new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    position += new Vector2(0, -speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
                 {
                     jump = false;
-                    position += new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    position += new Vector2(0, speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
                 {
-                    position += new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    position += new Vector2(-speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     flipped = true;
 
                     if (timer > limit)
@@ -130,7 +141,7 @@ namespace TilemapGame
                 }
                 if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
                 {
-                    position += new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    position += new Vector2(speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     flipped = false;
                     if (timer > limit)
                     {
@@ -143,10 +154,10 @@ namespace TilemapGame
             //This is a temporary solution to allow the player to move away from the tile map platform. Need to implement a better solution
             else
             {
-                if(flipped) position -= new Vector2(-1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if(!flipped) position -= new Vector2(1, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if(jump) position -= new Vector2(0, -1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (!jump) position -= new Vector2(0, 1) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(flipped) position -= new Vector2(-speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(!flipped) position -= new Vector2(speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(jump) position -= new Vector2(0, -speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (!jump) position -= new Vector2(0, speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             
@@ -183,6 +194,11 @@ namespace TilemapGame
         public bool CollidesWith(BoundingCircle circle)
         {
             return this.bounds.CollidesWith(circle);
+        }
+
+        public bool CollidesWith(BoundingRectangle other)
+        {
+            return this.bounds.CollidesWith(other);
         }
     }
 }
