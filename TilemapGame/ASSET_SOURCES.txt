@@ -30,4 +30,4 @@ Content/Sleigh Ride - created by Dee Yan-Key and available on Free Music Archive
 
 Content/Press_Start_2P/PressStart2P-Regular.ttf - Press_Start_2P font created by CodeMan38, released on Google Fonts (https://fonts.google.com/specimen/Press%20Start%202P) under the Open Font License
 
-Content/peppermint_diffuse.png - created by Clint Bellanger as part of their Candy Pack on OpenGameArt.org (https://opengameart.org/content/candy-pack), licensed under public domain
+Content/peppermint_diffuse.png - created by Clint Bellanger as part of their Candy Pack on OpenGameArt.org (https://opengameart.org/content/candy-pack), licensed under public domain, image modified to use only part of the original asset

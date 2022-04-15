@@ -19,6 +19,7 @@ namespace TilemapGame
         private SoundEffect _candyCollectedSound;
         private Song _music;
         private SpriteFont _textFont;
+        private CubeCandy test;
 
         public TilemapGame()
         {
@@ -54,6 +55,7 @@ namespace TilemapGame
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(_music);
             _textFont = Content.Load<SpriteFont>("PressStart2P");
+            test = new CubeCandy(this, Matrix.Identity);
         }
 
         protected override void Update(GameTime gameTime)
@@ -86,6 +88,7 @@ namespace TilemapGame
                 CandySetup();
                 foreach (Candy c in _candies) c.LoadContent(Content);
             }
+            test.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -100,6 +103,7 @@ namespace TilemapGame
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(_textFont, "Use Arrows\n to Move", new Vector2(25, 25), Color.Gold);
             _spriteBatch.DrawString(_textFont, "Collect\n Candy", new Vector2(600, 25), Color.Gold);
+            test.Draw();
             _spriteBatch.End();
             base.Draw(gameTime);
         }
