@@ -19,12 +19,6 @@
 /processorParam:Quality=Best
 /build:Candy_Pickup.wav
 
-#begin Dee Yan-Key - sleigh ride III.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Dee Yan-Key - sleigh ride III.mp3;Sleigh Ride.mp3
-
 #begin explosionblue01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -217,6 +211,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:PressStart2P.spritefont
+
+#begin Sleigh Ride.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sleigh Ride.mp3
 
 #begin Tilemap.png
 /importer:TextureImporter

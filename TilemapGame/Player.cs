@@ -75,6 +75,9 @@ namespace TilemapGame
         /// </summary>
         public Vector2 Velocity { get; set; }
 
+        /// <summary>
+        /// If the speed up power up has been collected
+        /// </summary>
         public bool PowerUpActive 
         {
             get { return powerUpActive; }
@@ -108,6 +111,7 @@ namespace TilemapGame
         /// <param name="gameTime">The GameTime</param>
         public void Update(GameTime gameTime)
         {
+            //Determine the movement speed based on if the power up is active
             if (powerUpActive) speed = 2.5f;
             else speed = 1.0f;
 
@@ -190,12 +194,17 @@ namespace TilemapGame
         /// Detects if there has been a collision, particularly with an candy sprite
         /// </summary>
         /// <param name="circle">The bounding circle being detected</param>
-        /// <returns>If the ship has collided with the circle</returns>
+        /// <returns>If the player has collided with the circle</returns>
         public bool CollidesWith(BoundingCircle circle)
         {
             return this.bounds.CollidesWith(circle);
         }
 
+        /// <summary>
+        /// Detects if there has been a collision, particularly with a CubeCandy
+        /// </summary>
+        /// <param name="other">The bounding rectangle being detected</param>
+        /// <returns>If the player has collided with the rectangle</returns>
         public bool CollidesWith(BoundingRectangle other)
         {
             return this.bounds.CollidesWith(other);

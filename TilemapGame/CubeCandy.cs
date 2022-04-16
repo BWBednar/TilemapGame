@@ -11,6 +11,9 @@ using TilemapGame.Collisions;
 
 namespace TilemapGame
 {
+    /// <summary>
+    /// Class representing the CubeCandy 3D model. Used as a power up for speed in the game
+    /// </summary>
     public class CubeCandy
     {
         Game game;
@@ -20,16 +23,31 @@ namespace TilemapGame
         Texture2D texture;
         BoundingRectangle bounds;
 
+        /// <summary>
+        /// The bounds of the model
+        /// </summary>
         public BoundingRectangle Bounds
         {
             get { return bounds; }
             set { bounds = value; }
         }
 
+        /// <summary>
+        /// If the bounds have been collided with
+        /// </summary>
         public bool Colliding { get; set; }
 
+        /// <summary>
+        /// If the model / power up has been collected
+        /// </summary>
         public bool Collected = false;
 
+        /// <summary>
+        /// Constructor for the model / powerup
+        /// </summary>
+        /// <param name="game">The game the model is being rendered in</param>
+        /// <param name="world">The world of the game</param>
+        /// <param name="bounds">The bounds for the collisions</param>
         public CubeCandy(Game game, Matrix world, BoundingRectangle bounds)
         {
             this.game = game;
@@ -144,15 +162,6 @@ namespace TilemapGame
             effect.TextureEnabled = true;
             effect.Texture = texture;
 
-            // Turn on lighting
-            effect.LightingEnabled = true;
-            // Set up light 0
-            effect.DirectionalLight0.Enabled = true;
-            effect.DirectionalLight0.Direction = new Vector3(1f, 0, 1f);
-            effect.DirectionalLight0.DiffuseColor = new Vector3(0.8f, 0, 0);
-            effect.DirectionalLight0.SpecularColor = new Vector3(1f, 0.4f, 0.4f);
-
-            effect.AmbientLightColor = new Vector3(1, 1, 1);
 
         }
 
@@ -182,10 +191,10 @@ namespace TilemapGame
         /// <summary>
         /// Updates the Cube
         /// </summary>
-        /// <param name="gameTime"></param>
+        /// <param name="gameTime">The game time</param>
         public void Update(GameTime gameTime)
         {
-            if (Collected) return;
+            if (Collected) return; //Model won't be rendered if collected already
 
             float angle = (float)gameTime.TotalGameTime.TotalSeconds;
             // Look at the cube from farther away while spinning around it

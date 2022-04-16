@@ -22,7 +22,7 @@ namespace TilemapGame
         private CubeCandy cubeCandy;
         private SoundEffect _powerUpSound;
         private double powerUpTimer;
-        private double powerUpTimeLimit = 5.0;
+        private double powerUpTimeLimit = 8.0;
 
         public TilemapGame()
         {
@@ -58,7 +58,7 @@ namespace TilemapGame
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(_music);
             _textFont = Content.Load<SpriteFont>("PressStart2P");
-            cubeCandy = new CubeCandy(this, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
+            cubeCandy = new CubeCandy(this, Matrix.Identity, new BoundingRectangle(400 + 15, 240 + 15, 30, 30));
             _powerUpSound = Content.Load<SoundEffect>("PowerUp");
         }
 
@@ -88,12 +88,15 @@ namespace TilemapGame
             {
                 _player.EncounterWall = false;
             }
+
+            //Reset the collectables if they have all been collected
             if(_totalCollected % 9 == 0 && _totalCollected > 0)
             {
                 CandySetup();
-                foreach (Candy c in _candies) c.LoadContent(Content);
+                 foreach (Candy c in _candies) c.LoadContent(Content);
                 if (cubeCandy == null) cubeCandy = new CubeCandy(this, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
             }
+            //If the player has the speed boost power up active
             if (_player.PowerUpActive)
             {
                 powerUpTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -104,8 +107,10 @@ namespace TilemapGame
                     
                 }
             }
+            //If the power up collectable is one screen
             if(cubeCandy != null)
             {
+                cubeCandy.Update(gameTime);
                 if (_player.CollidesWith(cubeCandy.Bounds))
                 {
                     cubeCandy.Collected = true;
@@ -114,8 +119,6 @@ namespace TilemapGame
                     _player.PowerUpActive = true;
                 }
             }
-            if (cubeCandy == null) cubeCandy = null;
-            else cubeCandy.Update(gameTime);
             base.Update(gameTime);
         }
 
