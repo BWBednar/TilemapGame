@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TilemapGame
+namespace TilemapGame.Sprites
 {
     /// <summary>
     /// Class representing a candy collectable

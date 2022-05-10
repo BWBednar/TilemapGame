@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace TilemapGame
+namespace TilemapGame.Sprites
 {
     /// <summary>
     /// A class for the player character

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TilemapGame.Collisions;
 
-namespace TilemapGame
+namespace TilemapGame.Sprites
 {
     /// <summary>
     /// Class representing the CubeCandy 3D model. Used as a power up for speed in the game
