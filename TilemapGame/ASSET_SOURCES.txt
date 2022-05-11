@@ -28,4 +28,4 @@ Content/peppermint_diffuse.png - created by Clint Bellanger as part of their Can
 Content/PowerUp.wav - created by phoenix1291 (AKA SwissArcadeGameEntertainment) as part of their Sound Effect Pack 2 on OpenGameArt.Org (https://opengameart.org/content/sound-effects-pack-2), licensed under public domain
 Content/snowball.png - created by alf0186 on OpenGameArt.org (https://opengameart.org/content/snowball-pixel-art), licensed under public domain
 Content/landscape.png - created by PWL on OpenGameArt.org (https://opengameart.org/content/seamless-hd-landscape-in-parts), licensed under public domain
-Content/sno.png - created by rh0 on OpenGameArt.org as part of their 18 Gradient Skies Texture Pack (https://opengameart.org/content/18-gradient-skies-640x480), licensed under public domain
+Content/omb.png - created by rh0 on OpenGameArt.org as part of their 18 Gradient Skies Texture Pack (https://opengameart.org/content/18-gradient-skies-640x480), licensed under public domain
