@@ -59,7 +59,7 @@ namespace TilemapGame.Screens
         // This can be overridden to customize the appearance.
         public virtual void Draw(MenuScreen screen, bool isSelected, GameTime gameTime)
         {
-            var color = isSelected ? Color.Yellow : Color.White;
+            var color = isSelected ? Color.Red : Color.White;
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;

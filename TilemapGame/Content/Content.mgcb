@@ -139,6 +139,18 @@
 /processorParam:TextureFormat=Color
 /build:explosionred05.png
 
+#begin landscape.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:landscape.png
+
 #begin lollipop_blue.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -217,6 +229,18 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Sleigh Ride.mp3
+
+#begin snowball.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:snowball.png
 
 #begin Tilemap.png
 /importer:TextureImporter

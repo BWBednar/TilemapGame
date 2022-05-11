@@ -7,16 +7,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TilemapGame.StateManagement;
+using TilemapGame.ParticleSystem;
 
 namespace TilemapGame.Screens
 {
-    public class BackgroundScreen : GameScreen
+    public class BackgroundScreen : GameScreen, IParticleEmitter
     {
         private ContentManager _content;
-        private Texture2D _backgroundTexture;
 
-        private double animationTimer;
-        private int animationFrame;
+        private SnowParticleSystem _snowFall;
+        private Texture2D _background;
+
+        public Vector2 Position { get; set; }
+        public Vector2 Velocity { get; set; }
 
         /// <summary>
         /// Constructor for the background screen
@@ -39,7 +42,10 @@ namespace TilemapGame.Screens
             if (_content == null)
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            _backgroundTexture = _content.Load<Texture2D>("space_background");
+            _snowFall = new SnowParticleSystem(ScreenManager.Game, new Rectangle(-100, -20, Constants.GAME_WIDTH + 200, Constants.GAME_HEIGHT + 20));
+            ScreenManager.Game.Components.Add(_snowFall);
+            _background = _content.Load<Texture2D>("landscape");
+
         }
 
         /// <summary>
@@ -66,25 +72,11 @@ namespace TilemapGame.Screens
         /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
-            animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if (animationTimer > 0.2)
-            {
-                animationTimer -= 0.2;
-                animationFrame++;
-                if (animationFrame == 4) animationFrame = 0;
-            }
-            var source = new Rectangle(animationFrame * 64, 0, 64, 64);
-
+            //ScreenManager.Game.GraphicsDevice.Clear(Color.CornflowerBlue);
             var spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
-            //fill the background with the animation
-            for (int i = 0; i < Constants.GAME_HEIGHT * 10; i += 64)
-            {
-                for (int j = 0; j < Constants.GAME_WIDTH * 10; j += 64)
-                {
-                    spriteBatch.Draw(_backgroundTexture, new Rectangle(j, i, 64, 64), source, Color.White);
-                }
-            }
+            spriteBatch.Draw(_background, new Rectangle(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT), Color.White);
+            _snowFall.Draw(gameTime);
             spriteBatch.End();
         }
     }
