@@ -119,7 +119,7 @@ namespace TilemapGame.Screens
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // start at Y = 175; each X value is generated per entry
-            var position = new Vector2(0f, 175f);
+            var position = new Vector2(0f, 100f);
 
             // update each menu entry's location in turn
             foreach (var menuEntry in _menuEntries)
@@ -178,7 +178,7 @@ namespace TilemapGame.Screens
             // Draw the menu title centered on the screen
             var titlePosition = new Vector2(graphics.Viewport.Width / 2, 80);
             var titleOrigin = font.MeasureString(_menuTitle) / 2;
-            var titleColor = Color.Red;//new Color(192, 192, 192) * TransitionAlpha;
+            var titleColor = Color.Navy;//new Color(192, 192, 192) * TransitionAlpha;
             const float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;

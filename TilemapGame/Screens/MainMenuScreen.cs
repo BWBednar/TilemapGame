@@ -15,13 +15,13 @@ namespace TilemapGame.Screens
         public MainMenuScreen() : base("Winter Wonderland")
         {
             var playGameMenuEntry = new MenuEntry("Play Game");
-            //var exitMenuEntry = new MenuEntry("Exit");
+            var exitMenuEntry = new MenuEntry("Exit");
 
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            //exitMenuEntry.Selected += OnCancel;
+            exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(playGameMenuEntry);
-            //MenuEntries.Add(exitMenuEntry);
+            MenuEntries.Add(exitMenuEntry);
         }
 
         /// <summary>

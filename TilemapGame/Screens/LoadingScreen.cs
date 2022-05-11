@@ -4,6 +4,7 @@
 
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using TilemapGame.StateManagement;
 using TilemapGame.Sprites;
@@ -28,6 +29,7 @@ namespace TilemapGame.Screens
         private bool _otherScreensAreGone;
         private readonly GameScreen[] _screensToLoad;
         private ContentManager _content;
+        private Texture2D _background;
 
 
         // Constructor is private: loading screens should be activated via the static Load method instead.
@@ -36,14 +38,14 @@ namespace TilemapGame.Screens
             var viewport = screenManager.GraphicsDevice.Viewport;
             _loadingIsSlow = loadingIsSlow;
             _screensToLoad = screensToLoad;
-            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOnTime = TimeSpan.FromSeconds(2.0);
         }
 
         public override void Activate()
         {
             if (_content == null)
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
-
+            _background = _content.Load<Texture2D>("landscape");
         }
 
         // Activates the loading screen.
@@ -108,14 +110,15 @@ namespace TilemapGame.Screens
 
                 // Center the text in the viewport.
                 var viewport = ScreenManager.GraphicsDevice.Viewport;
-                var viewportSize = new Vector2(viewport.Width - 40, viewport.Height);
+                var viewportSize = new Vector2(viewport.Width, viewport.Height - 200);
                 var textSize = font.MeasureString(message);
                 var textPosition = (viewportSize - textSize) / 2;
 
-                var color = Color.White * TransitionAlpha;
+                var color = Color.Navy * TransitionAlpha;
 
                 // Draw the text.
                 spriteBatch.Begin();
+                spriteBatch.Draw(_background, new Rectangle(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT), Color.White);
                 spriteBatch.DrawString(font, message, textPosition, color);
                 spriteBatch.End();
             }

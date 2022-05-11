@@ -45,7 +45,6 @@ namespace TilemapGame.Screens
             _snowFall = new SnowParticleSystem(ScreenManager.Game, new Rectangle(-100, -20, Constants.GAME_WIDTH + 200, Constants.GAME_HEIGHT + 20));
             ScreenManager.Game.Components.Add(_snowFall);
             _background = _content.Load<Texture2D>("landscape");
-
         }
 
         /// <summary>
