@@ -44,7 +44,7 @@ namespace TilemapGame
         {
             //_screenManager.AddScreen(new BackgroundScreen(), null);
             _screenManager.AddScreen(new GamePlayScreen(), null);
-            //_screenManager.AddScreen(new MainMenuScreen(), null);
+            _screenManager.AddScreen(new MainMenuScreen(), null);
         }
 
         /// <summary>

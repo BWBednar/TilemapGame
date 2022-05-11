@@ -53,7 +53,7 @@ namespace TilemapGame.Screens
         public override void Activate()
         {
             var content = ScreenManager.Game.Content;
-            _gradientTexture = content.Load<Texture2D>("gradient");
+            //_gradientTexture = content.Load<Texture2D>("gradient");
         }
 
         public override void HandleInput(GameTime gameTime, InputState input)
