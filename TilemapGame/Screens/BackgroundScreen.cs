@@ -15,7 +15,7 @@ namespace TilemapGame.Screens
     {
         private ContentManager _content;
 
-        private SnowParticleSystem _snowFall;
+        public SnowParticleSystem _snowFall;
         private Texture2D _background;
 
         public Vector2 Position { get; set; }
@@ -42,8 +42,8 @@ namespace TilemapGame.Screens
             if (_content == null)
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            _snowFall = new SnowParticleSystem(ScreenManager.Game, new Rectangle(-100, -20, Constants.GAME_WIDTH + 200, Constants.GAME_HEIGHT + 20));
-            ScreenManager.Game.Components.Add(_snowFall);
+            //_snowFall = new SnowParticleSystem(ScreenManager.Game, new Rectangle(-100, -20, Constants.GAME_WIDTH + 200, Constants.GAME_HEIGHT + 20));
+            //ScreenManager.Game.Components.Add(_snowFall);
             _background = _content.Load<Texture2D>("landscape");
         }
 
@@ -75,7 +75,7 @@ namespace TilemapGame.Screens
             var spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
             spriteBatch.Draw(_background, new Rectangle(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT), Color.White);
-            _snowFall.Draw(gameTime);
+            //_snowFall.Draw(gameTime);
             spriteBatch.End();
         }
     }

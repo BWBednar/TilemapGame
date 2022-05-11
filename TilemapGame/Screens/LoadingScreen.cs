@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using TilemapGame.StateManagement;
-using TilemapGame.Sprites;
+using TilemapGame.ParticleSystem;
 
 namespace TilemapGame.Screens
 {
@@ -39,6 +39,7 @@ namespace TilemapGame.Screens
             _loadingIsSlow = loadingIsSlow;
             _screensToLoad = screensToLoad;
             TransitionOnTime = TimeSpan.FromSeconds(2.0);
+
         }
 
         public override void Activate()
@@ -76,6 +77,7 @@ namespace TilemapGame.Screens
                 {
                     if (screen != null)
                         ScreenManager.AddScreen(screen, ControllingPlayer);
+                    
                 }
 
                 // Once the load has finished, we use ResetElapsedTime to tell

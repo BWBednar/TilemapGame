@@ -12,6 +12,7 @@ namespace TilemapGame.ParticleSystem
     public class SnowParticleSystem : ParticleSystem 
     {
         Rectangle _source;
+        Game _game;
 
         public bool IsSnowing { get; set; } = true;
 
@@ -37,6 +38,7 @@ namespace TilemapGame.ParticleSystem
             base.Update(gameTime);
 
             if (IsSnowing) AddParticles(_source);
+            else _game.Components.Remove(this);
         }
     }
 }
