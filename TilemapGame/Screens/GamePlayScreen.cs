@@ -30,7 +30,7 @@ namespace TilemapGame.Screens
         private double powerUpTimer;
         private double powerUpTimeLimit = 8.0;
         private InputAction _pauseAction;
-        private InputAction _restartAction;
+        private int score = 0;
 
 
         /// <summary>
@@ -44,10 +44,6 @@ namespace TilemapGame.Screens
             _pauseAction = new InputAction(
                 new[] { Buttons.Start, Buttons.Back },
                 new[] { Keys.Back, Keys.Escape }, true);
-
-            _restartAction = new InputAction(
-                new[] { Buttons.Back },
-                new[] { Keys.Enter }, true);
         }
 
         /// <summary>
@@ -106,6 +102,7 @@ namespace TilemapGame.Screens
                     _candies[i].Collected = true;
                     _candyCollectedSound.Play();
                     _totalCollected++;
+                    score += 100;
                 }
             }
 
@@ -119,7 +116,7 @@ namespace TilemapGame.Screens
             }
 
             //Reset the collectables if they have all been collected
-            if (_totalCollected % 11 == 0 && _totalCollected > 0)
+            if (_totalCollected % 12 == 0 && _totalCollected > 0)
             {
                 CandySetup();
                 foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
@@ -191,6 +188,7 @@ namespace TilemapGame.Screens
             _player.Draw(gameTime, _spriteBatch);
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
             if (cubeCandy != null) cubeCandy.Draw();
+            _spriteBatch.DrawString(_textFont, "Score:\n" + score, new Vector2(340, 100), Color.Gold);
             _spriteBatch.End();
             base.Draw(gameTime);
 
