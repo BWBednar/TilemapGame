@@ -22,7 +22,7 @@ namespace TilemapGame.Sprites
         private Texture2D texture;
         private bool flipped;
         private bool jump;
-        private Vector2 position = new Vector2(150, 200);
+        private Vector2 position = new Vector2(175, 240);
         private BoundingRectangle bounds;
         private Game game;
         private Vector2 direction;

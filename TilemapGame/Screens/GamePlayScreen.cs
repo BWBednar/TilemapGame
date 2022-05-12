@@ -3,14 +3,11 @@
  */
 
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 using TilemapGame.StateManagement;
 using TilemapGame.Sprites;
 using TilemapGame.Collisions;
@@ -125,7 +122,7 @@ namespace TilemapGame.Screens
             }
 
             //Reset the collectables if they have all been collected
-            if (_totalCollected % 9 == 0 && _totalCollected > 0)
+            if (_totalCollected % 11 == 0 && _totalCollected > 0)
             {
                 CandySetup();
                 foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
@@ -184,10 +181,6 @@ namespace TilemapGame.Screens
             {
                 RestartGameplayScreen();
             }
-            else
-            {
-                //add all the movement ish here
-            }
         }
 
         /// <summary>
@@ -204,8 +197,6 @@ namespace TilemapGame.Screens
             _tilemap.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
-            _spriteBatch.DrawString(_textFont, "Use Arrows\n to Move", new Vector2(25, 25), Color.Gold);
-            _spriteBatch.DrawString(_textFont, "Collect\n Candy", new Vector2(600, 25), Color.Gold);
             if (cubeCandy != null) cubeCandy.Draw();
             _spriteBatch.End();
             base.Draw(gameTime);
@@ -223,67 +214,88 @@ namespace TilemapGame.Screens
             int radius = 25;
             _candies = new List<Candy>();
             _candies.Add(new Candy()
-            {
+            { //uppper far left corner
+                Center = new Vector2(60, 60),
+                Velocity = velocity,
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(60 + (size / 2), 50 + (size / 2)), radius)
+            });
+            _candies.Add(new Candy()
+            { //middle far left
+                Center = new Vector2(60, 240),
+                Velocity = velocity,
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(60 + (size / 2), 240 + (size / 2)), radius)
+            }); 
+            _candies.Add(new Candy()
+            { //lower far left corner
+                Center = new Vector2(60, 420),
+                Velocity = velocity,
+                Mass = mass,
+                Bounds = new BoundingCircle(new Vector2(60 + (size / 2), 420 + (size / 2)), radius)
+            }); 
+            _candies.Add(new Candy()
+            { // middle upper
                 Center = new Vector2(400, 50),
                 Velocity = velocity,
                 Mass = mass,
                 Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 50 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(125, 100),
+            { // middle lower
+                Center = new Vector2(400, 420),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(125 + (size / 2), 100 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 420 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(675, 100),
+            { // far right upper corner
+                Center = new Vector2(740, 60),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(675 + (size / 2), 100 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(740 + (size / 2), 60 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(400, 160),
+            { // far right middle
+                Center = new Vector2(740, 240),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 160 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(740 + (size / 2), 240 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(400, 300),
+            { //far right lower corner
+                Center = new Vector2(740, 420),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(400 + (size / 2), 300 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(740 + (size / 2), 420 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(25, 330),
+            { //middle left upper left
+                Center = new Vector2(220, 120),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(25 + (size / 2), 330 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(220 + (size / 2), 120 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(775, 330),
+            { //middle right upper right
+                Center = new Vector2(580, 120),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(775 + (size / 2), 330 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(580 + (size / 2), 120 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(145, 450),
+            { //middle left lower left
+                Center = new Vector2(230, 300),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(145 + (size / 2), 450 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(230 + (size / 2), 300 + (size / 2)), radius)
             });
             _candies.Add(new Candy()
-            {
-                Center = new Vector2(655, 450),
+            { //middle right lower right
+                Center = new Vector2(570, 300),
                 Velocity = velocity,
                 Mass = mass,
-                Bounds = new BoundingCircle(new Vector2(655 + (size / 2), 450 + (size / 2)), radius)
+                Bounds = new BoundingCircle(new Vector2(570 + (size / 2), 300 + (size / 2)), radius)
             });
         }
 

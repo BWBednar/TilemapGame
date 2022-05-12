@@ -38,7 +38,7 @@ namespace TilemapGame.Screens
             var viewport = screenManager.GraphicsDevice.Viewport;
             _loadingIsSlow = loadingIsSlow;
             _screensToLoad = screensToLoad;
-            TransitionOnTime = TimeSpan.FromSeconds(2.0);
+            TransitionOnTime = TimeSpan.FromSeconds(3.0);
 
         }
 
@@ -122,6 +122,8 @@ namespace TilemapGame.Screens
                 spriteBatch.Begin();
                 spriteBatch.Draw(_background, new Rectangle(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT), Color.White);
                 spriteBatch.DrawString(font, message, textPosition, color);
+                spriteBatch.DrawString(font, "Use Arrows\n to Move", new Vector2(25, 25), color);
+                spriteBatch.DrawString(font, "Collect\n Candy", new Vector2(600, 25), color);
                 spriteBatch.End();
             }
         }
