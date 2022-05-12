@@ -96,9 +96,6 @@ namespace TilemapGame.Screens
         /// <param name="coveredByOtherScreen">If this screen is covered by a different screen</param>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                ScreenManager.Game.Exit();
-
             // TODO: Add your update logic here
             _player.Update(gameTime);
             foreach (Candy c in _candies) c.Update(gameTime);
@@ -175,11 +172,7 @@ namespace TilemapGame.Screens
             if (_pauseAction.Occurred(input, ControllingPlayer, out player))
             {
                 //Implement pause screen later
-                //ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
-            }
-            else if (_restartAction.Occurred(input, ControllingPlayer, out player))
-            {
-                RestartGameplayScreen();
+                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
         }
 
@@ -297,16 +290,6 @@ namespace TilemapGame.Screens
                 Mass = mass,
                 Bounds = new BoundingCircle(new Vector2(570 + (size / 2), 300 + (size / 2)), radius)
             });
-        }
-
-        /// <summary>
-        /// Helper method for resetting the gameplay screen.
-        /// Includes resetting ship position, asteroids, and the boolean state variables for the game
-        /// </summary>
-        private void RestartGameplayScreen()
-        {
-            LoadingScreen.Load(ScreenManager, true, null, new BackgroundScreen(), new GamePlayScreen());
-            this.Deactivate();
         }
     }
 }

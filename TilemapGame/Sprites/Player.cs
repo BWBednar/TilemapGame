@@ -29,7 +29,6 @@ namespace TilemapGame.Sprites
         private double timer;
         private int frameCount;
         private bool encounterWall;
-        private Vector2 lastEncounter = new Vector2(-100, -100);
         private bool powerUpActive;
         private float speed;
 

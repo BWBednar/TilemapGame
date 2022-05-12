@@ -68,6 +68,7 @@ namespace TilemapGame.Screens
             if (_menuSelect.Occurred(input, ControllingPlayer, out playerIndex))
             {
                 Accepted?.Invoke(this, new PlayerIndexEventArgs(playerIndex));
+                ScreenManager.Game.Exit();
                 ExitScreen();
             }
             else if (_menuCancel.Occurred(input, ControllingPlayer, out playerIndex))

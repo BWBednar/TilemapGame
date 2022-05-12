@@ -4,6 +4,7 @@ Sprites/Player - based on Sprite Example created by Nathan Bean
 Collisions/* - based on Collision Example created by Nathan Bean
 Sprites/CubeCandy - based on Basic 3D Rending Example and Lighting and Camera Example by Nathan Bean
 ParticleSystem/* - based on Particle System Example created by Nathan Bean
+Screens/* and StateManagement/* - based on Game Architecutre Example created by Nathan Bean
 
 Assets:
 Content/explosionblue01.png - created by lumimae as part of their Candy Pack 1 on OpenGameArt.org (https://opengameart.org/content/candy-pack-1), licensed under public domain
