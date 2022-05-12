@@ -9,7 +9,7 @@ namespace TilemapGame
         /// <summary>
         /// Game world width
         /// </summary>
-        public static int GAME_WIDTH = 760;
+        public static int GAME_WIDTH = 800;
 
         /// <summary>
         /// Game world height
