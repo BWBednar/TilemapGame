@@ -60,7 +60,7 @@ namespace TilemapGame.Screens
             foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
             _candyCollectedSound = ScreenManager.Game.Content.Load<SoundEffect>("Candy_Pickup");
             _textFont = ScreenManager.Game.Content.Load<SpriteFont>("PressStart2P");
-            cubeCandy = new CubeCandy(ScreenManager.Game, Matrix.Identity, new BoundingRectangle(400 + 15, 240 + 15, 30, 30));
+            cubeCandy = new CubeCandy(ScreenManager.Game, Matrix.Identity, new BoundingRectangle(400 - 15, 240 - 15, 30, 30));
             _powerUpSound = ScreenManager.Game.Content.Load<SoundEffect>("PowerUp");
             
             

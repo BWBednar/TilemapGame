@@ -18,7 +18,7 @@ namespace TilemapGame.Sprites
     /// </summary>
     public class Player
     {
-        private KeyboardState keyboardState;
+        private KeyboardState currentKeyboardState;
         private Texture2D texture;
         private bool flipped;
         private bool jump;
@@ -114,27 +114,16 @@ namespace TilemapGame.Sprites
             if (powerUpActive) speed = 2.5f;
             else speed = 1.0f;
 
-            keyboardState = Keyboard.GetState();
+            currentKeyboardState = Keyboard.GetState();
             timer += gameTime.ElapsedGameTime.TotalSeconds;
             double limit = 0.2;
             // Apply keyboard movement if the player would not walk into a wall
             if (!encounterWall)
             {
-                if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+                if (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
                 {
                     jump = true;
                     position += new Vector2(0, -speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
-                {
-                    jump = false;
-                    position += new Vector2(0, speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
-                {
-                    position += new Vector2(-speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    flipped = true;
-
                     if (timer > limit)
                     {
                         timer -= limit;
@@ -142,7 +131,29 @@ namespace TilemapGame.Sprites
                         if (frameCount > 3) frameCount = 0;
                     }
                 }
-                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                if (currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
+                {
+                    jump = false;
+                    position += new Vector2(0, speed) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (timer > limit)
+                    {
+                        timer -= limit;
+                        frameCount++;
+                        if (frameCount > 3) frameCount = 0;
+                    }
+                }
+                if (currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A))
+                {
+                    position += new Vector2(-speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    flipped = true;
+                    if (timer > limit)
+                    {
+                        timer -= limit;
+                        frameCount++;
+                        if (frameCount > 3) frameCount = 0;
+                    }
+                }
+                if (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
                 {
                     position += new Vector2(speed, 0) * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     flipped = false;
@@ -153,6 +164,7 @@ namespace TilemapGame.Sprites
                         if (frameCount > 3) frameCount = 0;
                     }
                 }
+                
             }
             //This is a temporary solution to allow the player to move away from the tile map platform. Need to implement a better solution
             else
