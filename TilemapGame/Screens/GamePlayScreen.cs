@@ -34,6 +34,8 @@ namespace TilemapGame.Screens
         private double powerUpTimeLimit = 8.0;
         private InputAction _pauseAction;
         private int score = 0;
+        private double gameTimer = 100.00;
+        private bool stopGame = false;
 
 
         /// <summary>
@@ -100,58 +102,66 @@ namespace TilemapGame.Screens
         /// <param name="coveredByOtherScreen">If this screen is covered by a different screen</param>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            // TODO: Add your update logic here
-            _player.Update(gameTime);
-            foreach (Candy c in _candies) c.Update(gameTime);
-            for (int i = 0; i < _candies.Count; i++)
+            if (!stopGame)
             {
-                if (_player.CollidesWith(_candies[i].Bounds) && !_candies[i].Collected)
+                _player.Update(gameTime);
+                foreach (Candy c in _candies) c.Update(gameTime);
+                for (int i = 0; i < _candies.Count; i++)
                 {
-                    _candies[i].Collected = true;
-                    _candyCollectedSound.Play();
-                    _totalCollected++;
-                    score += 100;
+                    if (_player.CollidesWith(_candies[i].Bounds) && !_candies[i].Collected)
+                    {
+                        _candies[i].Collected = true;
+                        _candyCollectedSound.Play();
+                        _totalCollected++;
+                        score += 100;
+                    }
                 }
-            }
 
-            if (_currentTilemap.CollidesWith(_player.Bounds))
-            {
-                _player.EncounterWall = true;
-            }
-            else
-            {
-                _player.EncounterWall = false;
-            }
-
-            //Reset the collectables if they have all been collected
-            if (_totalCollected % 12 == 0 && _totalCollected > 0)
-            {
-                CandySetup();
-                foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
-                if (cubeCandy == null) cubeCandy = new CubeCandy(ScreenManager.Game, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
-                ChangeTilemap();
-            }
-            //If the player has the speed boost power up active
-            if (_player.PowerUpActive)
-            {
-                powerUpTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (powerUpTimer > powerUpTimeLimit)
+                if (_currentTilemap.CollidesWith(_player.Bounds))
                 {
-                    _player.PowerUpActive = false;
-                    powerUpTimer -= powerUpTimeLimit;
-
+                    _player.EncounterWall = true;
                 }
-            }
-            //If the power up collectable is one screen
-            if (cubeCandy != null)
-            {
-                cubeCandy.Update(gameTime);
-                if (_player.CollidesWith(cubeCandy.Bounds))
+                else
                 {
-                    cubeCandy.Collected = true;
-                    _powerUpSound.Play();
-                    cubeCandy = null;
-                    _player.PowerUpActive = true;
+                    _player.EncounterWall = false;
+                }
+
+                //Reset the collectables if they have all been collected
+                if (_totalCollected % 12 == 0 && _totalCollected > 0)
+                {
+                    CandySetup();
+                    foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
+                    if (cubeCandy == null) cubeCandy = new CubeCandy(ScreenManager.Game, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
+                    ChangeTilemap();
+                }
+                //If the player has the speed boost power up active
+                if (_player.PowerUpActive)
+                {
+                    powerUpTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (powerUpTimer > powerUpTimeLimit)
+                    {
+                        _player.PowerUpActive = false;
+                        powerUpTimer -= powerUpTimeLimit;
+
+                    }
+                }
+                //If the power up collectable is one screen
+                if (cubeCandy != null)
+                {
+                    cubeCandy.Update(gameTime);
+                    if (_player.CollidesWith(cubeCandy.Bounds))
+                    {
+                        cubeCandy.Collected = true;
+                        _powerUpSound.Play();
+                        cubeCandy = null;
+                        _player.PowerUpActive = true;
+                    }
+                }
+
+                gameTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (gameTimer <= 0)
+                {
+                    stopGame = true;
                 }
             }
         }
@@ -189,7 +199,7 @@ namespace TilemapGame.Screens
         public override void Draw(GameTime gameTime)
         {
             var _spriteBatch = ScreenManager.SpriteBatch;
-            ScreenManager.Game.GraphicsDevice.Clear(Color.CornflowerBlue);
+            ScreenManager.Game.GraphicsDevice.Clear(Color.LightSkyBlue);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
@@ -197,7 +207,8 @@ namespace TilemapGame.Screens
             _player.Draw(gameTime, _spriteBatch);
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
             if (cubeCandy != null) cubeCandy.Draw();
-            _spriteBatch.DrawString(_textFont, "Score:\n" + score, new Vector2(340, 100), Color.Gold);
+            _spriteBatch.DrawString(_textFont, "Score:\n" + score, new Vector2(330, 100), Color.Gold);
+            _spriteBatch.DrawString(_textFont, "Time:" + (int)gameTimer, new Vector2(330, 150), Color.Gold);
             _spriteBatch.End();
             base.Draw(gameTime);
 
