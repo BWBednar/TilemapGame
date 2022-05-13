@@ -34,8 +34,9 @@ namespace TilemapGame.Screens
         private double powerUpTimeLimit = 8.0;
         private InputAction _pauseAction;
         private int score = 0;
-        private double gameTimer = 100.00;
+        private double gameTimer = 10.00;
         private bool stopGame = false;
+        private int screenCount = -1;
 
 
         /// <summary>
@@ -162,6 +163,7 @@ namespace TilemapGame.Screens
                 if (gameTimer <= 0)
                 {
                     stopGame = true;
+                    ScreenManager.AddScreen(new RestartGameScreen("Game Over!\nFinal Score: " + score + "\n\nWould you like\nto play again?"), ControllingPlayer);
                 }
             }
         }
@@ -187,8 +189,15 @@ namespace TilemapGame.Screens
             PlayerIndex player;
             if (_pauseAction.Occurred(input, ControllingPlayer, out player))
             {
-                //Implement pause screen later
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+                screenCount = ScreenManager.GetScreens().Length;
+                stopGame = true;
+            }
+            //If the pause screen is gone, resume the game
+            if (((screenCount - 1) == ScreenManager.GetScreens().Length) && (screenCount != -1))
+            {
+                stopGame = false;
+                screenCount = -1;
             }
         }
 
