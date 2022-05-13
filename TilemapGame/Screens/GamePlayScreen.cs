@@ -19,7 +19,10 @@ namespace TilemapGame.Screens
     /// </summary>
     public class GamePlayScreen : GameScreen
     {
-        private Tilemap _tilemap;
+        private Tilemap _currentTilemap;
+        private Tilemap _tilemapBaseVariation;
+        private Tilemap _tilemapVariationOne;
+        private Tilemap _tilemapVaritationTwo;
         private Player _player;
         private List<Candy> _candies;
         private int _totalCollected = 0;
@@ -51,11 +54,16 @@ namespace TilemapGame.Screens
         /// </summary>
         public override void Activate()
         {
-            _tilemap = new Tilemap("TilemapDetails.txt");
+            _tilemapBaseVariation = new Tilemap("TilemapDetails.txt");
+            _tilemapVariationOne = new Tilemap("TilemapVariationOne.txt");
+            _tilemapVaritationTwo = new Tilemap("TilemapVariationTwo.txt");
+            _currentTilemap = _tilemapBaseVariation;
             _player = new Player(ScreenManager.Game);
             _candies = new List<Candy>();
             CandySetup();
-            _tilemap.LoadContent(ScreenManager.Game.Content);
+            _tilemapBaseVariation.LoadContent(ScreenManager.Game.Content);
+            _tilemapVariationOne.LoadContent(ScreenManager.Game.Content);
+            _tilemapVaritationTwo.LoadContent(ScreenManager.Game.Content);
             _player.LoadContent(ScreenManager.Game.Content);
             foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
             _candyCollectedSound = ScreenManager.Game.Content.Load<SoundEffect>("Candy_Pickup");
@@ -106,7 +114,7 @@ namespace TilemapGame.Screens
                 }
             }
 
-            if (_tilemap.CollidesWith(_player.Bounds))
+            if (_currentTilemap.CollidesWith(_player.Bounds))
             {
                 _player.EncounterWall = true;
             }
@@ -121,6 +129,7 @@ namespace TilemapGame.Screens
                 CandySetup();
                 foreach (Candy c in _candies) c.LoadContent(ScreenManager.Game.Content);
                 if (cubeCandy == null) cubeCandy = new CubeCandy(ScreenManager.Game, Matrix.Identity, new BoundingRectangle(400 + 7, 240 + 7, 14, 14));
+                ChangeTilemap();
             }
             //If the player has the speed boost power up active
             if (_player.PowerUpActive)
@@ -184,7 +193,7 @@ namespace TilemapGame.Screens
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _tilemap.Draw(gameTime, _spriteBatch);
+            _currentTilemap.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
             foreach (Candy c in _candies) c.Draw(gameTime, _spriteBatch);
             if (cubeCandy != null) cubeCandy.Draw();
@@ -288,6 +297,26 @@ namespace TilemapGame.Screens
                 Mass = mass,
                 Bounds = new BoundingCircle(new Vector2(570 + (size / 2), 300 + (size / 2)), radius)
             });
+        }
+
+        private void ChangeTilemap()
+        {
+            int choice = RandomHelper.Next(0, 3);
+            switch (choice)
+            {
+                case 0:
+                    _currentTilemap = _tilemapBaseVariation;
+                    break;
+                case 1:
+                    _currentTilemap = _tilemapVariationOne;
+                    break;
+                case 2:
+                    _currentTilemap = _tilemapVaritationTwo;
+                    break;
+                default:
+                    _currentTilemap = _tilemapBaseVariation;
+                    break;
+            }
         }
     }
 }
