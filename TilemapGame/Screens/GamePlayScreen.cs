@@ -34,7 +34,7 @@ namespace TilemapGame.Screens
         private double powerUpTimeLimit = 8.0;
         private InputAction _pauseAction;
         private int score = 0;
-        private double gameTimer = 10.00;
+        private double gameTimer = 100.00;
         private bool stopGame = false;
         private int screenCount = -1;
 

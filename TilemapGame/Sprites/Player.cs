@@ -111,8 +111,8 @@ namespace TilemapGame.Sprites
         public void Update(GameTime gameTime)
         {
             //Determine the movement speed based on if the power up is active
-            if (powerUpActive) speed = 2.5f;
-            else speed = 1.0f;
+            if (powerUpActive) speed = 3.0f;
+            else speed = 1.5f;
 
             currentKeyboardState = Keyboard.GetState();
             timer += gameTime.ElapsedGameTime.TotalSeconds;
