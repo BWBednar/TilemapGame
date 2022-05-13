@@ -15,8 +15,5 @@ namespace TilemapGame
         /// Game world height
         /// </summary>
         public static int GAME_HEIGHT = 480;
-
-        public static float LINEAR_ACCELERATION = 50;
-        public static float ANGULAR_ACCELERATION = 50;
     }
 }

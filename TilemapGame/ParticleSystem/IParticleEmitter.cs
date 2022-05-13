@@ -1,4 +1,8 @@
-﻿using System;
+﻿/**
+ * Starting code taken from tilemap exercise created by Nathan Bean
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
